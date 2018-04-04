@@ -21,9 +21,7 @@ Installation
 
 2. Copy scripts/* to /usr/local/bin
 
-2. Edit /usr/local/bin/mispconfig.py and specify your MISP URL and authorization key
-
-3. Copy getiocmisp.py in /opt/splunk/etc/apps/<yourapp>/bin/
+3. Edit /usr/local/bin/mispconfig.py and specify your MISP URL and authorization key
 
 4. Restart Splunk
 
