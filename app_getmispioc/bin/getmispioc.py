@@ -14,7 +14,9 @@ import os, sys, subprocess
 # Path to SPplunk-SDK
 # See: http://dev.splunk.com/view/python-sdk/SP-CAAAEDG
 try:
-        sys.path.insert(0,'/usr/local/lib/python2.7/dist-packages')
+        sys.path.append('/usr/local/lib/python2.7/dist-packages')
+        sys.path.append('/usr/lib64/python2.7/site-packages')
+        sys.path.append('/opt/splunk-sdk-python/')
         from splunklib.searchcommands import dispatch, ReportingCommand, Configuration, Option, validators
 except:
         print('Splunk-SDK not installed?')
@@ -22,14 +24,17 @@ except:
 
 @Configuration(requires_preop=False)
 class getmispioc(ReportingCommand):
-        server          = Option(require=False, validate=validators.Match("server",     r"^https?:\/\/[0-9a-zA-Z\.]+(?:\:\d+)?$"))
-        authkey         = Option(require=False, validate=validators.Match("authkey",    r"^[0-9a-zA-Z]{40}$"))
-        sslcheck        = Option(require=False, validate=validators.Match("sslcheck",   r"^[yYnN01]$"))
-        eventid         = Option(require=False, validate=validators.Match("eventid",    r"^[0-9]+$"))
-        last            = Option(require=False, validate=validators.Match("last",       r"^[0-9]+[hdwm]$"))
-        onlyids         = Option(require=False, validate=validators.Match("onlyids",    r"^[yYnN01]+$"))
-        category        = Option(require=False)
-        type            = Option(require=False)
+        '''
+        Extract IOC's from MISP
+        '''
+        server          = Option(doc="",require=False, validate=validators.Match("server",     r"^https?:\/\/[0-9a-zA-Z\.]+(?:\:\d+)?$"))
+        authkey         = Option(doc="",require=False, validate=validators.Match("authkey",    r"^[0-9a-zA-Z]{40}$"))
+        sslcheck        = Option(doc="",require=False, validate=validators.Match("sslcheck",   r"^[yYnN01]$"))
+        eventid         = Option(doc="",require=False, validate=validators.Match("eventid",    r"^[0-9]+$"))
+        last            = Option(doc="",require=False, validate=validators.Match("last",       r"^[0-9]+[hdwm]$"))
+        onlyids         = Option(doc="",require=False, validate=validators.Match("onlyids",    r"^[yYnN01]+$"))
+        category        = Option(doc="",require=False)
+        type            = Option(doc="",require=False)
 
         @Configuration()
         def map(self, records):
@@ -68,7 +73,7 @@ class getmispioc(ReportingCommand):
                         print('Missing "eventid" or "last" argument')
                         exit(1)
 
-                _NEW_PYTHON_PATH = '/usr/bin/python3'
+                _NEW_PYTHON_PATH = '/bin/python3'
                 _SPLUNK_PYTHON_PATH = os.environ['PYTHONPATH']
                 os.environ['PYTHONPATH'] = _NEW_PYTHON_PATH
                 my_process = '/usr/local/bin/get-misp-ioc.py'

@@ -12,14 +12,16 @@ Prerequisites
 =============
 1. Install Python 3 on the Splunk server
 2. Install Splunk-SDK for Python (see http://dev.splunk.com/view/python-sdk/SP-CAAAEDG)
-3. Install PyMISP (see https://github.com/CIRCL/PyMISP)
+3. Install PyMISP (see https://github.com/CIRCL/PyMISP). Install it from Github
 
 Installation
 ============
 
 1. Copy app_getmispioc to $SPLUNK_HOME/etc/apps/
 
-2. Copy scripts/* to /usr/local/bin
+2. Copy scripts/* to /usr/local/bin/
+
+3. Verify permissions. Files owned by splunk -user and .py files are executable
 
 3. Edit /usr/local/bin/mispconfig.py and specify your MISP URL and authorization key
 
